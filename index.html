@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="כיפה קדושה: כיפות סרוגות בעבודת יד, בהתאמה אישית בצבעים ובדוגמה שתבחרו. נסרגות בשדרות.">
 <meta property="og:title" content="כיפה קדושה | כיפות סרוגות בהתאמה אישית">
@@ -103,7 +104,17 @@ footer .bl{color:var(--gold);font-size:15px;margin-bottom:6px}
 .wa{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline-end:20px;width:54px;height:54px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 22px rgba(0,0,0,.35);z-index:5}
 .wa svg{width:28px;height:28px;fill:#fff}
 @media (max-width:720px){.steps{grid-template-columns:1fr}.about{grid-template-columns:1fr}.photo{max-width:260px;margin:0 auto}.about .eyebrow,.about h2{text-align:center}}
-@media (prefers-reduced-motion:no-preference){.hero>.wrap>*{animation:up .8s ease-out both}@keyframes up{from{opacity:0;transform:translateY(14px)}}}
+.bsd{padding-top:16px;font:700 16px "Heebo",sans-serif;color:var(--gold);letter-spacing:.05em}
+.top{padding-top:10px}
+.js .rv{opacity:0;transform:translateY(34px) scale(.98);filter:blur(5px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+@media (prefers-reduced-motion:no-preference){
+.hero>*{animation:up 1s cubic-bezier(.2,.7,.2,1) both}
+.hero>:nth-child(2){animation-delay:.1s}.hero>:nth-child(3){animation-delay:.2s}.hero>:nth-child(4){animation-delay:.3s}.hero>:nth-child(5){animation-delay:.4s}.hero>:nth-child(6){animation-delay:.5s}
+.hero>.kip{animation:up 1s cubic-bezier(.2,.7,.2,1) both,bob 6s ease-in-out 1.2s infinite}
+@keyframes up{from{opacity:0;transform:translateY(26px);filter:blur(5px)}}
+@keyframes bob{50%{transform:translateY(-9px)}}}
+@media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;filter:none;transition:none}}
 </style>
 </head>
 <body>
@@ -111,6 +122,7 @@ footer .bl{color:var(--gold);font-size:15px;margin-bottom:6px}
 <symbol id="wi" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm-4.5 5.5 2.2-1 1.1 2.3-1 1c.6 1.5 1.9 2.8 3.400 3.400l1-1 2.300 1.100-1 2.200C11.500 16.500 7.500 12.500 7.500 7.500Z"/></symbol></svg>
 
 <div class="wrap">
+  <div class="bsd">בס״ד</div>
   <div class="top"><div class="logo">
     <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#2e7d57"/><circle cx="50" cy="50" r="38" fill="none" stroke="#e6c878" stroke-width="3" stroke-dasharray="5 3"/><g fill="none" stroke="#e6c878" stroke-width="4" stroke-linejoin="round"><polygon points="50,28 69,60 31,60"/><polygon points="50,72 31,40 69,40"/></g></svg>
     <div><b>כיפה קדושה</b><small>סריגה אישית משדרות</small></div></div></div>
@@ -194,7 +206,7 @@ footer .bl{color:var(--gold);font-size:15px;margin-bottom:6px}
   </div>
 </div></section>
 
-<footer><div class="bl">בס״ד</div><div style="margin-top:10px">כיפה קדושה · שדרות · כל הזכויות שמורות 2026</div></footer>
+<footer><div style="margin-top:10px">כיפה קדושה · שדרות · כל הזכויות שמורות 2026</div></footer>
 
 <a class="wa wl" href="#" aria-label="וואטסאפ"><svg><use href="#wi"/></svg></a>
 
@@ -205,6 +217,16 @@ footer .bl{color:var(--gold);font-size:15px;margin-bottom:6px}
   var url="https://wa.me/"+PHONE+"?text="+encodeURIComponent(text);
   document.querySelectorAll(".wl").forEach(function(a){a.href=url;a.target="_blank";a.rel="noopener"});
   document.getElementById("tel").href="tel:+"+PHONE;
+  var els=document.querySelectorAll(".eyebrow,section h2,.sub,.step,.tile,details,.about .photo,.about p,.banner,.pills"),cnt=new Map(),list=[];
+  els.forEach(function(el){
+    if(el.matches(".banner *"))return;
+    var n=cnt.get(el.parentNode)||0;cnt.set(el.parentNode,n+1);
+    el.classList.add("rv");el.style.transitionDelay=Math.min(n,5)*90+"ms";list.push(el);
+  });
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}})},{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    list.forEach(function(el){io.observe(el)});
+  }else{list.forEach(function(el){el.classList.add("in")})}
 })();
 </script>
 </body>
